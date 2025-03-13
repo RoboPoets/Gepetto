@@ -1,7 +1,6 @@
 import bpy
 
 from .main import ToolPanel, separator
-from .. import updater
 from ..operators import info
 from ..core.icon_manager import Icons
 from ..core.login_manager import user
@@ -17,9 +16,6 @@ class InfoPanel(ToolPanel, bpy.types.Panel):
 
         row = layout.row(align=True)
         row.label(text='Geppetto', icon_value=Icons.STUDIO_LIVE_LOGO.get_icon())
-        row = layout.row(align=True)
-        row.scale_y = 0.1
-        row.label(text='for Blender (v' + updater.current_version_str + ')', icon='BLANK1')
 
         separator(layout, 0.01)
 

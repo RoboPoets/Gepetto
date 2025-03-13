@@ -2,7 +2,6 @@ import bpy
 from .main import ToolPanel, separator
 from ..operators.login import LoginButton
 from ..core.icon_manager import Icons
-from .. import updater, updater_ops
 from ..core.login_manager import user
 
 
@@ -12,9 +11,6 @@ class LoginPanel(ToolPanel, bpy.types.Panel):
 
     def draw(self, context):
         layout = self.layout
-
-        updater.check_for_update_background(check_on_startup=True)
-        updater_ops.draw_update_notification_panel(layout)
 
         row = layout.row(align=True)
         row.scale_y = 2

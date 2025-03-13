@@ -11,8 +11,6 @@ bl_info = {
     'wiki_url': 'https://github.com/RoboPoets/rokoko-studio-live-blender#readme',
 }
 
-beta_branch = False
-
 import os
 import sys
 import json
@@ -202,33 +200,11 @@ classes_always_enable = []
 
 # register and unregister all classes
 def register():
-    print("\n### Loading Geppetto for Blender...")
+    print("\n### Loading Geppetto ...")
 
     # Check for unsupported Blender versions
     check_unsupported_blender_versions()
 
-    # Register the updater
-    # Important to do early, so it is always loaded even in case of an error
-    from . import updater_ops
-    from . import updater
-    if not first_startup:
-        import importlib
-        importlib.reload(updater_ops)
-        importlib.reload(updater)
-    updater_ops.register()
-
-    # Now that the updater is loaded, do the rest of the registration safely
-    try:
-        register_late()
-    except Exception:
-        print("\nERROR: Rokoko plugin failed to load:")
-        trace = traceback.format_exc()
-        print(trace)
-        show_error("Expand the plugin module to access the updater to check for a newer version.\n\n" + trace)
-        return
-
-
-def register_late():
     # Library path
     main_dir = pathlib.Path(os.path.dirname(__file__)).resolve()
     resources_dir = os.path.join(main_dir, "resources")
@@ -268,12 +244,10 @@ def register_late():
         panels.objects.ObjectsPanel,
         panels.command_api.CommandPanel,
         panels.retargeting.RetargetingPanel,
-        panels.updater.UpdaterPanel,
         panels.info.InfoPanel,
     ]
     classes_login = [  # These panels will only be loaded when the user is logged out
         panels.login.LoginPanel,
-        panels.updater.UpdaterPanel,
         panels.info.InfoPanel,
     ]
     classes_always_enable = [  # These non-panels will always be loaded, all non-panel ui should go in here
@@ -348,21 +322,13 @@ def register_late():
     # Init fbx patcher
     core.fbx_patcher.start_fbx_patch_timer()
 
-    # Update updater info as late as possible, to ensure that errors are shown instead of being overwritten
-    from . import updater_ops
-    updater_ops.update_info(bl_info, beta_branch)
-
-    print("### Loaded Geppetto for Blender successfully!\n")
+    print("### Loaded Geppetto successfully!\n")
 
 
 def unregister():
-    print("### Unloading Geppetto for Blender...")
-    from . import updater_ops
+    print("### Unloading Geppetto...")
     from . import operators
     from . import core
-
-    # Unregister updater
-    updater_ops.unregister()
 
     # Shut down receiver if the plugin is disabled while it is running
     if operators.receiver.receiver_enabled:
@@ -381,7 +347,7 @@ def unregister():
     # Exit the logged-in user
     core.login_manager.user.quit()
 
-    print("### Unloaded Geppetto for Blender successfully!\n")
+    print("### Unloaded Geppetto successfully!\n")
 
 
 if __name__ == '__main__':

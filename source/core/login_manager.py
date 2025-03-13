@@ -13,7 +13,6 @@ import requests
 import traceback
 import webbrowser
 
-from .. import updater
 from .utils import ui_refresh_all, cancel_gen
 
 from gql import Client, gql
