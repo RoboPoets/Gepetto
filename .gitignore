@@ -1,13 +1,18 @@
+source/resources/ignore_version.txt
+source/resources/no_auto_ver_check.txt
+source/resources/custom_bones
+source/resources/cache
+source/resources/libraries
+
+# custom make environment
+env.mk
+env.bat
+
+# build files
 __pycache__
-.idea
 *.pyc
-.cache
-tmp
-*.blend
+out/
+
+# intermediate files
 *.blend1
-.coverage
-resources/ignore_version.txt
-resources/no_auto_ver_check.txt
-resources/custom_bones
-resources/cache
-resources/libraries
+*.Blend1
