@@ -60,7 +60,7 @@ delete_files_on_startup_file = os.path.join(main_dir, "delete_files_on_startup.t
 # Get package name, important for panel in user preferences
 package_name = ''
 for mod in addon_utils.modules():
-    if mod.bl_info['name'] == 'Rokoko Studio Live for Blender':
+    if mod.bl_info['name'] == 'Geppetto for Blender':
         package_name = mod.__name__
 
 
@@ -135,7 +135,7 @@ def check_for_update_background(check_on_startup=False):
 
 
 def check_for_update():
-    print('Checking for Rokoko Studio Live update...')
+    print('Checking for Geppetto update...')
 
     # Get all releases from Github
     if not get_github_releases():

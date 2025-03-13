@@ -6,7 +6,7 @@ from . import updater
 class CheckForUpdateButton(bpy.types.Operator):
     bl_idname = 'rsl_updater.check_for_update'
     bl_label = 'Check now for Update'
-    bl_description = 'Checks if a new update is available for Rokoko Studio Live'
+    bl_description = 'Checks if a new update is available for Geppetto'
     bl_options = {'INTERNAL'}
 
     @classmethod
@@ -22,7 +22,7 @@ class CheckForUpdateButton(bpy.types.Operator):
 class UpdateToLatestButton(bpy.types.Operator):
     bl_idname = 'rsl_updater.update_latest'
     bl_label = 'Update Now'
-    bl_description = 'Updates Rokoko Studio Live to the latest version'
+    bl_description = 'Updates Geppetto to the latest version'
     bl_options = {'INTERNAL'}
 
     @classmethod
@@ -40,7 +40,7 @@ class UpdateToLatestButton(bpy.types.Operator):
 class UpdateToSelectedButton(bpy.types.Operator):
     bl_idname = 'rsl_updater.update_selected'
     bl_label = 'Update to Selected version'
-    bl_description = 'Updates Rokoko Studio Live to the selected version'
+    bl_description = 'Updates Geppetto to the selected version'
     bl_options = {'INTERNAL'}
 
     @classmethod
@@ -60,7 +60,7 @@ class UpdateToSelectedButton(bpy.types.Operator):
 class UpdateToBetaButton(bpy.types.Operator):
     bl_idname = 'rsl_updater.update_beta'
     bl_label = 'Update to Beta version'
-    bl_description = 'Updates Rokoko Studio Live to the Beta version'
+    bl_description = 'Updates Geppetto to the Beta version'
     bl_options = {'INTERNAL'}
 
     def execute(self, context):
@@ -237,7 +237,7 @@ class UpdateCompletePanel(bpy.types.Operator):
         if updater.update_finished:
             row = col.row(align=True)
             row.scale_y = 0.9
-            row.label(text='Rokoko Studio Live was successfully updated.', icon='FILE_TICK')
+            row.label(text='Geppetto was successfully updated.', icon='FILE_TICK')
 
             row = col.row(align=True)
             row.scale_y = 0.9
@@ -287,7 +287,7 @@ class UpdateNotificationPopup(bpy.types.Operator):
 
         row = col.split(factor=0.55, align=True)
         row.scale_y = 1.05
-        row.label(text='Rokoko Studio Live v' + updater.latest_version_str + ' available!', icon='SOLO_ON')
+        row.label(text='Geppetto v' + updater.latest_version_str + ' available!', icon='SOLO_ON')
         row.operator(ShowPatchnotesPanel.bl_idname, text='Show Patchnotes')
 
         col.separator()
@@ -338,7 +338,7 @@ def draw_updater_panel(context, layout, user_preferences=False):
     if user_preferences:
         row = col.row(align=True)
         row.scale_y = 0.8
-        row.label(text='Rokoko Studio Live Updater:', icon='URL')
+        row.label(text='Geppetto Updater:', icon='URL')
         col.separator()
 
     if updater.update_finished:
@@ -497,9 +497,9 @@ def register():
             count += 1
         except ValueError:
             pass
-    # print('Registered', count, 'Rokoko Studio Live updater classes.')
+    # print('Registered', count, 'Geppetto updater classes.')
     if count < len(to_register):
-        print('Skipped', len(to_register) - count, 'Rokoko Studio Live updater classes.')
+        print('Skipped', len(to_register) - count, 'Geppetto updater classes.')
 
     # Delete and rename files that didn't get deleted during the update process
     updater.delete_and_rename_files_on_startup()

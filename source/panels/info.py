@@ -16,7 +16,7 @@ class InfoPanel(ToolPanel, bpy.types.Panel):
         layout = self.layout
 
         row = layout.row(align=True)
-        row.label(text='Rokoko Studio Live', icon_value=Icons.STUDIO_LIVE_LOGO.get_icon())
+        row.label(text='Geppetto', icon_value=Icons.STUDIO_LIVE_LOGO.get_icon())
         row = layout.row(align=True)
         row.scale_y = 0.1
         row.label(text='for Blender (v' + updater.current_version_str + ')', icon='BLANK1')

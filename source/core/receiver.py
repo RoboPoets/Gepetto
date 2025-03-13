@@ -155,8 +155,8 @@ class Receiver:
         global show_error
         show_error = False
 
-        print("Rokoko Studio Live started listening on port " + str(port))
+        print("Geppetto started listening on port " + str(port))
 
     def stop(self):
         self.sock.close()
-        print("Rokoko Studio Live stopped listening")
+        print("Geppetto stopped listening")

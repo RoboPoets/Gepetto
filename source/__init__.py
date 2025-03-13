@@ -1,14 +1,14 @@
 
 # Important plugin info for Blender
 bl_info = {
-    'name': 'Rokoko Studio Live for Blender',
-    'author': 'Rokoko Electronics ApS',
+    'name': 'Geppetto',
+    'author': 'Robo Poets & Rokoko Electronics ApS',
     'category': 'Animation',
-    'location': 'View 3D > Tool Shelf > Rokoko',
-    'description': 'Stream your Rokoko Studio animations directly into Blender',
-    'version': (1, 4, 1),
-    'blender': (2, 80, 0),
-    'wiki_url': 'https://github.com/Rokoko/rokoko-studio-live-blender#readme',
+    'location': 'View 3D > Tool Shelf > Geppetto',
+    'description': 'A set of tools for animation authoring and retargeting',
+    'version': (1, 5, 0),
+    'blender': (4, 0, 0),
+    'wiki_url': 'https://github.com/RoboPoets/rokoko-studio-live-blender#readme',
 }
 
 beta_branch = False
@@ -182,7 +182,7 @@ def check_unsupported_blender_versions():
     if bpy.app.version < (2, 80):
         unregister()
         sys.tracebacklimit = 0
-        raise ImportError('\n\nBlender versions older than 2.80 are not supported by Rokoko Studio Live. '
+        raise ImportError('\n\nBlender versions older than 2.80 are not supported by Geppetto. '
                           '\nPlease use Blender 2.80 or later.'
                           '\n')
 
@@ -202,7 +202,7 @@ classes_always_enable = []
 
 # register and unregister all classes
 def register():
-    print("\n### Loading Rokoko Studio Live for Blender...")
+    print("\n### Loading Geppetto for Blender...")
 
     # Check for unsupported Blender versions
     check_unsupported_blender_versions()
@@ -352,11 +352,11 @@ def register_late():
     from . import updater_ops
     updater_ops.update_info(bl_info, beta_branch)
 
-    print("### Loaded Rokoko Studio Live for Blender successfully!\n")
+    print("### Loaded Geppetto for Blender successfully!\n")
 
 
 def unregister():
-    print("### Unloading Rokoko Studio Live for Blender...")
+    print("### Unloading Geppetto for Blender...")
     from . import updater_ops
     from . import operators
     from . import core
@@ -381,7 +381,7 @@ def unregister():
     # Exit the logged-in user
     core.login_manager.user.quit()
 
-    print("### Unloaded Rokoko Studio Live for Blender successfully!\n")
+    print("### Unloaded Geppetto for Blender successfully!\n")
 
 
 if __name__ == '__main__':
