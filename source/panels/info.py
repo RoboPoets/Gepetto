@@ -12,24 +12,11 @@ class InfoPanel(ToolPanel, bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
 
-        row = layout.row(align=True)
-        row.label(text="Geppetto", icon_value=Icons.STUDIO_LIVE_LOGO.get_icon())
-
-        separator(layout, 0.01)
-
-        row = layout.row(align=True)
-        row.label(text="Developed by ", icon="BLANK1")
-        row.scale_y = 0.6
-        row = layout.row(align=True)
-        row.scale_y = 0.3
-        row.label(text="Rokoko Electronics ApS", icon="BLANK1")
+        layout.row(align=True).label(text="Geppetto v1.5.0")
+        layout.row(align=True).label(text="© 2025 Robo Poets UG")
 
         separator(layout, 0.1)
 
-        col = layout.column(align=True)
-
-        row = col.row(align=True)
+        row = layout.row(align=True)
         row.operator(info.LicenseButton.bl_idname)
-        row.operator(info.RokokoButton.bl_idname)
-        row = col.row(align=True)
         row.operator(info.DocumentationButton.bl_idname)

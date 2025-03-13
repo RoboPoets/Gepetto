@@ -52,9 +52,7 @@ classes = [
     panels.retargeting.RSL_UL_BoneList,
     panels.retargeting.BoneListItem,
     operators.info.LicenseButton,
-    operators.info.RokokoButton,
     operators.info.DocumentationButton,
-    operators.info.ForumButton,
 ]
 
 
@@ -71,17 +69,11 @@ def register():
     if register_count < len(classes):
         print("Skipped", len(classes) - register_count, " classes.")
 
-    # Register all custom properties
     properties.register()
-
-    # Load custom icons
     core.icon_manager.load_icons()
 
     # Load bone detection list
     core.detection_manager.load_detection_lists()
-
-    # Init fbx patcher
-    core.fbx_patcher.start_fbx_patch_timer()
 
 
 def unregister():
@@ -89,14 +81,12 @@ def unregister():
     if operators.receiver.receiver_enabled:
         operators.receiver.ReceiverStart.force_disable()
 
-    # Unregister all classes
     for cls in reversed(classes):
         try:
             bpy.utils.unregister_class(cls)
         except RuntimeError:
             pass
 
-    # Unload all custom icons
     core.icon_manager.unload_icons()
 
 

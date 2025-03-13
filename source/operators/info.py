@@ -10,21 +10,9 @@ class LicenseButton(bpy.types.Operator):
 
     def execute(self, context):
         webbrowser.open(
-            "https://github.com/RokokoElectronics/rokoko-studio-live-blender/blob/master/LICENSE.md"
+            "https://github.com/RoboPoets/rokoko-studio-live-blender/blob/master/LICENSE.md"
         )
         self.report({"INFO"}, "Opened license.")
-        return {"FINISHED"}
-
-
-class RokokoButton(bpy.types.Operator):
-    bl_idname = "rsl.info_rokoko"
-    bl_label = "Website"
-    bl_description = "Opens the Rokoko website in the browser"
-    bl_options = {"INTERNAL"}
-
-    def execute(self, context):
-        webbrowser.open("https://www.rokoko.com/en")
-        self.report({"INFO"}, "Opened Rokoko website.")
         return {"FINISHED"}
 
 
@@ -35,20 +23,8 @@ class DocumentationButton(bpy.types.Operator):
     bl_options = {"INTERNAL"}
 
     def execute(self, context):
-        webbrowser.open("https://github.com/Rokoko/rokoko-studio-live-blender#readme")
-        self.report({"INFO"}, "Opened documentation.")
-        return {"FINISHED"}
-
-
-class ForumButton(bpy.types.Operator):
-    bl_idname = "rsl.info_forum"
-    bl_label = "Join our Forums"
-    bl_description = "Opens the Rokoko Blender forum in the browser"
-    bl_options = {"INTERNAL"}
-
-    def execute(self, context):
         webbrowser.open(
-            "https://rokoko.freshdesk.com/support/discussions/forums/47000399880"
+            "https://github.com/RoboPoets/rokoko-studio-live-blender#readme"
         )
-        self.report({"INFO"}, "Opened forums.")
+        self.report({"INFO"}, "Opened documentation.")
         return {"FINISHED"}
