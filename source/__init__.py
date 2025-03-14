@@ -5,7 +5,7 @@ bl_info = {
     "location": "View 3D > Tool Shelf > Geppetto",
     "description": "A set of tools for animation authoring and retargeting",
     "version": (1, 5, 0),
-    "blender": (4, 0, 0),
+    "blender": (3, 6, 0),
     "wiki_url": "https://github.com/RoboPoets/Geppetto#readme",
 }
 
