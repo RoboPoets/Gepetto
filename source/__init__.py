@@ -1,4 +1,3 @@
-# Important plugin info for Blender
 bl_info = {
     "name": "Geppetto",
     "author": "Robo Poets & Rokoko Electronics ApS",
@@ -37,22 +36,14 @@ classes = [
 
 
 def register():
-    register_count = 0
-
     for cls in classes:
         try:
             bpy.utils.register_class(cls)
-            register_count += 1
         except ValueError:
             print("Error: Failed to register class", cls)
 
-    if register_count < len(classes):
-        print("Skipped", len(classes) - register_count, " classes.")
-
     properties.register()
     core.icon_manager.load_icons()
-
-    # Load bone detection list
     core.detection_manager.load_detection_lists()
 
 

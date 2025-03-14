@@ -7,10 +7,6 @@ icons = None
 
 
 class Icons(Enum):
-    FACE = "FACE"
-    SUIT = "SUIT"
-    VP = "VP"
-    PAIRED = "PAIRED"
     START_RECORDING = "RECORD"
     STOP_RECORDING = "STOP"
     RESTART = "RESTART"
@@ -30,16 +26,10 @@ def load_icons():
     pcoll = previews.new()
 
     # Load a preview thumbnail of a file and store in the previews collection
-    pcoll.load("FACE", os.path.join(icons_dir, "icon-row-face-32.png"), "IMAGE")
-    pcoll.load("SUIT", os.path.join(icons_dir, "icon-row-suit-32.png"), "IMAGE")
-    pcoll.load("VP", os.path.join(icons_dir, "icon-vp-32.png"), "IMAGE")
-    pcoll.load("PAIRED", os.path.join(icons_dir, "icon-paired-32.png"), "IMAGE")
     pcoll.load("RECORD", os.path.join(icons_dir, "icon-record-32.png"), "IMAGE")
     pcoll.load("RESTART", os.path.join(icons_dir, "icon-restart-32.png"), "IMAGE")
-    pcoll.load("STOP", os.path.join(icons_dir, "icon-stop-white-32.png"), "IMAGE")
-    pcoll.load(
-        "CALIBRATE", os.path.join(icons_dir, "icon-straight-pose-32.png"), "IMAGE"
-    )
+    pcoll.load("STOP", os.path.join(icons_dir, "icon-stop-32.png"), "IMAGE")
+    pcoll.load("CALIBRATE", os.path.join(icons_dir, "icon-pose-32.png"), "IMAGE")
 
     global icons
     icons = pcoll
