@@ -57,7 +57,7 @@ face_shapes = [
     "tongueOut",
 ]
 
-# Tpose from Studio live
+# T-pose from Studio live
 actor_bones = OrderedDict()
 actor_bones["hip"] = Quaternion((-1.0, 0.0, -0.0, 0.0))
 actor_bones["spine"] = Quaternion((-0.0, -0.0, 0.0, -1.0))

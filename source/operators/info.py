@@ -9,9 +9,7 @@ class LicenseButton(bpy.types.Operator):
     bl_options = {"INTERNAL"}
 
     def execute(self, context):
-        webbrowser.open(
-            "https://github.com/RoboPoets/rokoko-studio-live-blender/blob/master/LICENSE.md"
-        )
+        webbrowser.open("https://github.com/RoboPoets/Geppetto/blob/master/LICENSE.md")
         self.report({"INFO"}, "Opened license.")
         return {"FINISHED"}
 
@@ -23,8 +21,6 @@ class DocumentationButton(bpy.types.Operator):
     bl_options = {"INTERNAL"}
 
     def execute(self, context):
-        webbrowser.open(
-            "https://github.com/RoboPoets/rokoko-studio-live-blender#readme"
-        )
+        webbrowser.open("https://github.com/RoboPoets/Geppetto#readme")
         self.report({"INFO"}, "Opened documentation.")
         return {"FINISHED"}
