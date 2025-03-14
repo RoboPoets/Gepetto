@@ -1,4 +1,4 @@
-from bpy.types import Scene, Object
+from bpy.types import Scene, Object, PropertyGroup
 from bpy.props import (
     IntProperty,
     StringProperty,
@@ -10,33 +10,34 @@ from bpy.props import (
 )
 
 from .core import animation_lists, state_manager, recorder, retargeting
-from .panels import retargeting as retargeting_ui
+
+
+class BoneListItem(PropertyGroup):
+    """Properties of the bone list items"""
+
+    bone_name_source: StringProperty(
+        name="Source Bone", description="The source bone name", default=""
+    )  # type: ignore
+
+    bone_name_target: StringProperty(
+        name="Target Bone", description="The target bone name", default=""
+    )  # type: ignore
+
+    bone_name_key: StringProperty(
+        name="Auto Detection Key",
+        description="The automatically detected bone key",
+        default="",
+    )  # type: ignore
+
+    is_custom: BoolProperty(
+        description="This determines if the field is a custom one source bone one",
+        default=False,
+    )  # type: ignore
 
 
 def register():
     # Receiver
-    Scene.rsl_receiver_port = IntProperty(
-        name="Streaming Port",
-        description="The port defined in Rokoko Studio",
-        default=14043,
-        min=1,
-        max=65535,
-    )
-    Scene.rsl_receiver_fps = IntProperty(
-        name="FPS",
-        description="How often is the data received",
-        default=60,
-        min=1,
-        max=100,
-    )
-    Scene.rsl_scene_scaling = FloatProperty(
-        name="Scene Scaling",
-        description="This allows you to scale the position of props and trackers."
-        "\nUseful to align their positions with armatures",
-        default=1,
-        precision=3,
-        step=1,
-    )
+
     Scene.rsl_reset_scene_on_stop = BoolProperty(
         name="Reset Scene on Stop",
         description="This will reset the location and position of animated objects to the state of before starting the receiver",
@@ -47,27 +48,6 @@ def register():
         description="Start and stop recording of the data from Rokoko Studio",
         default=False,
         update=recorder.toggle_recording,
-    )
-
-    # Command API
-    Scene.rsl_command_ip_address = StringProperty(
-        name="IP Address",
-        description="Input the IP address of Rokoko Studio",
-        default="127.0.0.1",
-        maxlen=15,
-    )
-    Scene.rsl_command_ip_port = IntProperty(
-        name="Command API Port",
-        description="The port defined in Rokoko Studio",
-        default=14053,
-        min=1,
-        max=65535,
-    )
-    Scene.rsl_command_api_key = StringProperty(
-        name="API Key",
-        description="Input the API key displayed in Rokoko Studio",
-        default="1234",
-        maxlen=15,
     )
 
     # Retargeting
@@ -104,9 +84,7 @@ def register():
             ),
         ],
     )
-    Scene.rsl_retargeting_bone_list = CollectionProperty(
-        type=retargeting_ui.BoneListItem
-    )
+    Scene.rsl_retargeting_bone_list = CollectionProperty(type=BoneListItem)
     Scene.rsl_retargeting_bone_list_index = IntProperty(
         name="Index for the retargeting bone list", default=0
     )

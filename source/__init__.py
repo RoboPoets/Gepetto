@@ -19,10 +19,6 @@ import bpy
 
 
 classes = [
-    panels.objects.ObjectsPanel,
-    panels.command_api.CommandPanel,
-    panels.retargeting.RetargetingPanel,
-    panels.info.InfoPanel,
     operators.recorder.RecorderStart,
     operators.recorder.RecorderStop,
     operators.detector.DetectFaceShapes,
@@ -37,19 +33,16 @@ classes = [
     operators.actor.InitTPose,
     operators.actor.ResetTPose,
     operators.actor.PrintCurrentPose,
-    operators.command_api.CommandTest,
-    operators.command_api.StartCalibration,
-    operators.command_api.Restart,
-    operators.command_api.StartRecording,
-    operators.command_api.StopRecording,
     operators.retargeting.BuildBoneList,
     operators.retargeting.AddBoneListItem,
     operators.retargeting.ClearBoneList,
     operators.retargeting.RetargetAnimation,
-    panels.retargeting.RSL_UL_BoneList,
-    panels.retargeting.BoneListItem,
     operators.info.LicenseButton,
     operators.info.DocumentationButton,
+    panels.retargeting.RSL_UL_BoneList,
+    panels.retargeting.RetargetingPanel,
+    panels.info.InfoPanel,
+    properties.BoneListItem,
 ]
 
 
