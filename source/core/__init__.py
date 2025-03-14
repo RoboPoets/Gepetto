@@ -1,4 +1,3 @@
-from . import receiver
 from . import animations
 from . import animation_lists
 from . import utils

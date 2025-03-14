@@ -19,13 +19,10 @@ import bpy
 
 
 classes = [
-    panels.main.ReceiverPanel,
     panels.objects.ObjectsPanel,
     panels.command_api.CommandPanel,
     panels.retargeting.RetargetingPanel,
     panels.info.InfoPanel,
-    operators.receiver.ReceiverStart,
-    operators.receiver.ReceiverStop,
     operators.recorder.RecorderStart,
     operators.recorder.RecorderStop,
     operators.detector.DetectFaceShapes,
@@ -77,10 +74,6 @@ def register():
 
 
 def unregister():
-    # Shut down receiver if the plugin is disabled while it is running
-    if operators.receiver.receiver_enabled:
-        operators.receiver.ReceiverStart.force_disable()
-
     for cls in reversed(classes):
         try:
             bpy.utils.unregister_class(cls)

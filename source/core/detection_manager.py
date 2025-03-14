@@ -1,6 +1,4 @@
 import os
-import bpy
-import json
 import pathlib
 
 from . import retargeting
@@ -29,11 +27,17 @@ def load_detection_lists():
     shape_detection_list_unmodified = setup_shape_list()
 
     # Load the custom naming lists from the file
-    bone_detection_list_custom, shape_detection_list_custom = load_custom_lists_from_file()
+    bone_detection_list_custom, shape_detection_list_custom = (
+        load_custom_lists_from_file()
+    )
 
     # Combine custom and internal lists
-    bone_detection_list = combine_lists(bone_detection_list_unmodified, bone_detection_list_custom)
-    shape_detection_list = combine_lists(shape_detection_list_unmodified, shape_detection_list_custom)
+    bone_detection_list = combine_lists(
+        bone_detection_list_unmodified, bone_detection_list_custom
+    )
+    shape_detection_list = combine_lists(
+        shape_detection_list_unmodified, shape_detection_list_custom
+    )
 
     # Print the whole bone list
     # print_bone_detection_list()
@@ -44,10 +48,12 @@ def setup_bone_list(raw_bone_list):
 
     for bone_key, bone_values in raw_bone_list.items():
         # Add the bones to the list if no side indicator is found
-        if 'left' not in bone_key:
+        if "left" not in bone_key:
             new_bone_list[bone_key] = [bone_value.lower() for bone_value in bone_values]
-            if bone_key == 'spine':
-                new_bone_list['chest'] = [bone_value.lower() for bone_value in bone_values]
+            if bone_key == "spine":
+                new_bone_list["chest"] = [
+                    bone_value.lower() for bone_value in bone_values
+                ]
             continue
 
         # Add bones to the list that are two sided
@@ -57,22 +63,27 @@ def setup_bone_list(raw_bone_list):
         for bone_name in bone_values:
             bone_name = bone_name.lower()
 
-            if '\l' in bone_name:
-                for replacement in ['l', 'left', 'r', 'right']:
-                    bone_name_new = bone_name.replace('\l', replacement)
+            if "\l" in bone_name:
+                for replacement in ["l", "left", "r", "right"]:
+                    bone_name_new = bone_name.replace("\l", replacement)
 
                     # Debug if duplicates are found
-                    if bone_name_new in bone_values_left or bone_name_new in bone_values_right:
-                        print('Duplicate autodetect bone entry:', bone_name, bone_name_new)
+                    if (
+                        bone_name_new in bone_values_left
+                        or bone_name_new in bone_values_right
+                    ):
+                        print(
+                            "Duplicate autodetect bone entry:", bone_name, bone_name_new
+                        )
                         continue
 
-                    if 'l' in replacement:
+                    if "l" in replacement:
                         bone_values_left.append(bone_name_new)
                     else:
                         bone_values_right.append(bone_name_new)
 
         bone_key_left = bone_key
-        bone_key_right = bone_key.replace('left', 'right')
+        bone_key_right = bone_key.replace("left", "right")
 
         new_bone_list[bone_key_left] = bone_values_left
         new_bone_list[bone_key_right] = bone_values_right
@@ -84,14 +95,16 @@ def setup_shape_list():
     new_shape_list = {}
 
     for shape_key, shape_names in shape_list.items():
-        new_shape_list[shape_key] = [shape_key.lower()] + [shape_name.lower() for shape_name in shape_names]
+        new_shape_list[shape_key] = [shape_key.lower()] + [
+            shape_name.lower() for shape_name in shape_names
+        ]
 
     return new_shape_list
 
 
 def combine_lists(internal_list, custom_list):
     """
-        Creates a combined list with the second list put in first but with the structure of the first list
+    Creates a combined list with the second list put in first but with the structure of the first list
     """
     combined_list = {}
 
@@ -114,25 +127,25 @@ def combine_lists(internal_list, custom_list):
 
 
 def print_bone_detection_list():
-    print('BONES')
+    print("BONES")
     for key, values in bone_detection_list.items():
         print(key, values)
         print()
 
-    print('CUSTOM BONES')
+    print("CUSTOM BONES")
     for key, values in bone_detection_list_custom.items():
         print(key, values)
-        print('--> ', bone_detection_list[key])
+        print("--> ", bone_detection_list[key])
         print()
 
     # print('SHAPES')
     # for key, values in shape_detection_list.items():
     #     print(key, values)
 
-    print('CUSTOM SHAPES')
+    print("CUSTOM SHAPES")
     for key, values in shape_detection_list_custom.items():
         print(key, values)
-        print('--> ', shape_detection_list[key])
+        print("--> ", shape_detection_list[key])
         print()
     print()
 
@@ -156,42 +169,43 @@ def print_bone_detection_list():
 def standardize_bone_name(name):
     # List of chars to replace if they are at the start of a bone name
     starts_with = [
-        ('_', ''),
-        ('ValveBiped_', ''),
-        ('Valvebiped_', ''),
-        ('Bip1_', 'Bip_'),
-        ('Bip01_', 'Bip_'),
-        ('Bip001_', 'Bip_'),
-        ('Character1_', ''),
-        ('HLP_', ''),
-        ('JD_', ''),
-        ('JU_', ''),
-        ('Armature|', ''),
-        ('Bone_', ''),
-        ('C_', ''),
-        ('Cf_S_', ''),
-        ('Cf_J_', ''),
-        ('G_', ''),
-        ('Joint_', ''),
-        ('DEF_', ''),
+        ("_", ""),
+        ("ValveBiped_", ""),
+        ("Valvebiped_", ""),
+        ("Bip1_", "Bip_"),
+        ("Bip01_", "Bip_"),
+        ("Bip001_", "Bip_"),
+        ("Character1_", ""),
+        ("HLP_", ""),
+        ("JD_", ""),
+        ("JU_", ""),
+        ("Armature|", ""),
+        ("Bone_", ""),
+        ("C_", ""),
+        ("Cf_S_", ""),
+        ("Cf_J_", ""),
+        ("G_", ""),
+        ("Joint_", ""),
+        ("DEF_", ""),
     ]
 
     # Standardize names
     # Make all the underscores!
-    name = name.replace(' ', '_') \
-        .replace('-', '_') \
-        .replace('.', '_') \
-        .replace('____', '_') \
-        .replace('___', '_') \
-        .replace('__', '_') \
-
+    name = (
+        name.replace(" ", "_")
+        .replace("-", "_")
+        .replace(".", "_")
+        .replace("____", "_")
+        .replace("___", "_")
+        .replace("__", "_")
+    )
     # Replace if name starts with specified chars
     for replacement in starts_with:
         if name.startswith(replacement[0]):
-            name = replacement[1] + name[len(replacement[0]):]
+            name = replacement[1] + name[len(replacement[0]) :]
 
     # Remove digits from the start
-    name_split = name.split('_')
+    name_split = name.split("_")
     if len(name_split) > 1 and name_split[0].isdigit():
         name = name_split[1]
 
@@ -201,18 +215,18 @@ def standardize_bone_name(name):
         name = name_split[1]
 
     # Another specific condition
-    if ':' in name:
-        for i, split in enumerate(name.split(':')):
+    if ":" in name:
+        for i, split in enumerate(name.split(":")):
             if i == 0:
-                name = ''
+                name = ""
             else:
                 name += split
 
     # Remove S0 from the end
-    if name[-2:] == 'S0':
+    if name[-2:] == "S0":
         name = name[:-2]
 
-    if name[-4:] == '_Jnt':
+    if name[-4:] == "_Jnt":
         name = name[:-4]
 
     return name.lower()
@@ -220,11 +234,13 @@ def standardize_bone_name(name):
 
 def detect_shape(obj, shape_name_key):
     # Go through the target mesh and search for shapekey that fit the main shapekey
-    found_shape_name = ''
+    found_shape_name = ""
     is_custom = False
 
     for shapekey in obj.data.shape_keys.key_blocks:
-        if is_custom:  # If a custom shapekey name was found, stop searching. it has priority
+        if (
+            is_custom
+        ):  # If a custom shapekey name was found, stop searching. it has priority
             break
 
         if shape_detection_list_custom.get(shape_name_key):
@@ -234,7 +250,9 @@ def detect_shape(obj, shape_name_key):
                     is_custom = True
                     break
 
-        if found_shape_name and shape_name_key != 'chest':  # If a shape_name was found, only continue looking for custom shapekey names, they have priority
+        if (
+            found_shape_name and shape_name_key != "chest"
+        ):  # If a shape_name was found, only continue looking for custom shapekey names, they have priority
             continue
 
         for shape_name_detected in shape_detection_list[shape_name_key]:
@@ -251,14 +269,16 @@ def detect_shape(obj, shape_name_key):
 
 def detect_bone(obj, bone_name_key, bone_name_source=None):
     # Go through the target armature and search for bones that fit the main source bone
-    found_bone_name = ''
+    found_bone_name = ""
     is_custom = False
 
     if not bone_name_source:
         bone_name_source = bone_name_key
 
     for bone in obj.pose.bones:
-        if is_custom:  # If a custom bone name was found, stop searching. it has priority
+        if (
+            is_custom
+        ):  # If a custom bone name was found, stop searching. it has priority
             break
 
         if bone_detection_list_custom.get(bone_name_key):
@@ -268,7 +288,9 @@ def detect_bone(obj, bone_name_key, bone_name_source=None):
                     is_custom = True
                     break
 
-        if found_bone_name and bone_name_key != 'chest':  # If a bone_name was found, only continue looking for custom bone names, they have priority
+        if (
+            found_bone_name and bone_name_key != "chest"
+        ):  # If a bone_name was found, only continue looking for custom bone names, they have priority
             continue
 
         for bone_name_detected in bone_detection_list[bone_name_key]:
@@ -301,7 +323,12 @@ def detect_retarget_bones() -> {str: (str, str)}:
 
     # Check if this animation is from Rokoko Studio. Ignore certain bones in that case
     is_rokoko_animation = False
-    if 'newton' in bone_list_animated and 'RightFinger1Tip' in bone_list_animated and 'HeadVertex' in bone_list_animated and 'LeftFinger2Metacarpal' in bone_list_animated:
+    if (
+        "newton" in bone_list_animated
+        and "RightFinger1Tip" in bone_list_animated
+        and "HeadVertex" in bone_list_animated
+        and "LeftFinger2Metacarpal" in bone_list_animated
+    ):
         is_rokoko_animation = True
 
     spines_source = []
@@ -314,20 +341,30 @@ def detect_retarget_bones() -> {str: (str, str)}:
             continue
 
         bone_item_source = bone_name
-        bone_item_target = ''
-        main_bone_name = ''
+        bone_item_target = ""
+        main_bone_name = ""
         standardized_bone_name_source = standardize_bone_name(bone_name)
 
         # Find the main bone name (bone name key) of the source bone
         for bone_main, bone_values in bone_detection_list.items():
-            if bone_main == 'chest':  # Ignore chest bones, these are only used for live data
+            if (
+                bone_main == "chest"
+            ):  # Ignore chest bones, these are only used for live data
                 continue
-            if bone_main in found_main_bones:  # Only find main bones once, except for spines
+            if (
+                bone_main in found_main_bones
+            ):  # Only find main bones once, except for spines
                 continue
             # If the source bone name is found in the bone detection list, add its main bone name to the list of found main bones
-            if bone_name.lower() in bone_values or standardized_bone_name_source in bone_values or standardized_bone_name_source == bone_main.lower():
+            if (
+                bone_name.lower() in bone_values
+                or standardized_bone_name_source in bone_values
+                or standardized_bone_name_source == bone_main.lower()
+            ):
                 main_bone_name = bone_main
-                if main_bone_name != 'spine':  # Ignore the spine bones for now, so that it can add the custom spine bones first
+                if (
+                    main_bone_name != "spine"
+                ):  # Ignore the spine bones for now, so that it can add the custom spine bones first
                     found_main_bones.append(main_bone_name)
                     break
 
@@ -339,17 +376,23 @@ def detect_retarget_bones() -> {str: (str, str)}:
             continue
 
         # If it's a spine bone, add it to the list for later fixing
-        if main_bone_name == 'spine':
+        if main_bone_name == "spine":
             spines_source.append(bone_name)
             continue
 
         # If it's a custom spine/chest bone, add it to the spine list nonetheless
-        custom_main_bone = main_bone_name.startswith('custom_bone_')
-        if custom_main_bone and standardize_bone_name(main_bone_name.replace('custom_bone_', '')) in bone_detection_list['spine']:
+        custom_main_bone = main_bone_name.startswith("custom_bone_")
+        if (
+            custom_main_bone
+            and standardize_bone_name(main_bone_name.replace("custom_bone_", ""))
+            in bone_detection_list["spine"]
+        ):
             spines_source.append(bone_name)
 
         # Go through the target armature and search for bones that fit the main source bone
-        bone_item_target = detect_bone(armature_target, main_bone_name, bone_name_source=bone_item_source)
+        bone_item_target = detect_bone(
+            armature_target, main_bone_name, bone_name_source=bone_item_source
+        )
 
         # Add the bone to the retargeting list again
         retargeting_dict[bone_item_source] = (bone_item_target, main_bone_name)
@@ -357,7 +400,7 @@ def detect_retarget_bones() -> {str: (str, str)}:
     # Add target spines to list for later fixing
     for bone in armature_target.pose.bones:
         bone_name_standardized = standardize_bone_name(bone.name)
-        if bone_name_standardized in bone_detection_list['spine']:
+        if bone_name_standardized in bone_detection_list["spine"]:
             spines_target.append(bone.name)
 
     # Fix spine auto detection
