@@ -19,20 +19,10 @@ import bpy
 
 
 classes = [
-    operators.recorder.RecorderStart,
-    operators.recorder.RecorderStop,
-    operators.detector.DetectFaceShapes,
-    operators.detector.DetectActorBones,
-    operators.detector.SaveCustomShapes,
-    operators.detector.SaveCustomBones,
     operators.detector.SaveCustomBonesRetargeting,
     operators.detector.ImportCustomBones,
     operators.detector.ExportCustomBones,
     operators.detector.ClearCustomBones,
-    operators.detector.ClearCustomShapes,
-    operators.actor.InitTPose,
-    operators.actor.ResetTPose,
-    operators.actor.PrintCurrentPose,
     operators.retargeting.BuildBoneList,
     operators.retargeting.AddBoneListItem,
     operators.retargeting.ClearBoneList,
